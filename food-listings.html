@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Food</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="food-listings.html">Food Listings</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li id="auth-link"><a href="login.html">Login</a></li>
+            <li id="cart-link" style="display: none;"><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li id="logout-link" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="food-list">
+        <h1>Available Food Items</h1>
+        <div class="food-item" data-name="Vegetable Curry" data-price="100">
+            <h2>Vegetable Curry</h2>
+            <p>Delicious vegetable curry made with fresh ingredients.</p>
+            <button onclick="addToCart('Vegetable Curry', 100)">Add to Cart</button>
+        </div>
+        <div class="food-item" data-name="Chicken Biryani" data-price="150">
+            <h2>Chicken Biryani</h2>
+            <p>Aromatic chicken biryani with spices.</p>
+            <button onclick="addToCart('Chicken Biryani', 150)">Add to Cart</button>
+        </div>
+        <div class="food-item" data-name="Paneer Tikka" data-price="120">
+            <h2>Paneer Tikka</h2>
+            <p>Grilled paneer cubes marinated in spices.</p>
+            <button onclick="addToCart('Paneer Tikka', 120)">Add to Cart</button>
+        </div>
+        <div class="food-item" data-name="Fruit Salad" data-price="80">
+            <h2>Fruit Salad</h2>
+            <p>Refreshing fruit salad with seasonal fruits.</p>
+            <button onclick="addToCart('Fruit Salad', 80)">Add to Cart</button>
+        </div>
+    </section>
+
+    <script>
+        function addToCart(name, price) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push({ name, price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(name + ' has been added to your cart.');
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        // Check if user is logged in
+        if (localStorage.getItem('loggedIn') === 'true') {
+            document.getElementById('cart-link').style.display = 'block';
+            document.getElementById('logout-link').style.display = 'block';
+        }
+
+        updateCartCount();
+
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

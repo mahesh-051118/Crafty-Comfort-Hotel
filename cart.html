@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="food-listings.html">Food Listings</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li id="auth-link" style="display: none;"><a href="login.html">Login</a></li>
+            <li id="cart-link"><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li id="logout-link" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="cart">
+        <h1>Your Cart</h1>
+        <div id="cart-items"></div>
+        <h2 id="total-price">Total: ₹0</h2>
+        <button id="checkout-button" onclick="checkout()">Checkout</button>
+    </section>
+
+    <script>
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsDiv = document.getElementById('cart-items');
+        let total = 0;
+
+        if (cart.length === 0) {
+            cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+        } else {
+            cart.forEach(item => {
+                cartItemsDiv.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
+                total += item.price;
+            });
+        }
+
+        document.getElementById('total-price').innerText = 'Total: ₹' + total;
+
+        function checkout() {
+            alert('Thank you for your purchase!');
+            localStorage.removeItem('cart');
+            window.location.href = 'index.html';
+        }
+
+        // Check if user is logged in
+        if (localStorage.getItem('loggedIn') === 'true') {
+            document.getElementById('cart-link').style.display = 'block';
+            document.getElementById('logout-link').style.display = 'block';
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

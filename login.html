@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="food-listings.html">Food Listings</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li id="cart-link" style="display: none;"><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li id="logout-link" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="login-form">
+        <h1>Login</h1>
+        <form id="form" onsubmit="return handleLogin(event)">
+            <input type="text" placeholder="Username" id="username" required>
+            <input type="password" placeholder="Password" id="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="login-message" class="error-message" style="display: none;"></p>
+    </section>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simulated login logic (replace with real authentication)
+            if (username === 'user' && password === 'pass') {
+                localStorage.setItem('loggedIn', 'true');
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById('login-message').innerText = 'Invalid credentials, please try again.';
+                document.getElementById('login-message').style.display = 'block';
+            }
+        }
+
+        // Check if user is logged in
+        if (localStorage.getItem('loggedIn') === 'true') {
+            document.getElementById('cart-link').style.display = 'block';
+            document.getElementById('logout-link').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
